@@ -1,24 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useMemo } from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { createTheme, ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Header from './components/Header';
+import Home from './components/Home';
 
-function App() {
+const App = () => {
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: light)');
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          type: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Header />
+        <Home />
+      </ThemeProvider>
   );
 }
 
